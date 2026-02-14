@@ -5,6 +5,7 @@ A pure Swift implementation of MurmurHash3 (x64, 128-bit) with zero heap allocat
 ## Features
 
 - **One-shot hashing** — hash `Data`, `[UInt8]`, or `String` in a single call
+- **File hashing** — hash files of any size without loading them into memory
 - **Streaming** — feed data incrementally via `update()`, finalize with `digest()`
 - **No heap allocations** — block and tail buffers use inline tuple storage
 - **Configurable seed** — pass a `UInt32` seed to any hashing method
@@ -21,6 +22,12 @@ let hash = Murmur3Hash.digestHex("hello world")
 
 let digest = Murmur3Hash.digest([0x01, 0x02, 0x03])
 // [UInt64, UInt64]
+```
+
+### File hashing
+
+```swift
+let hex = try Murmur3Hash.digestHex(fileAt: URL(fileURLWithPath: "/path/to/file"))
 ```
 
 ### Streaming

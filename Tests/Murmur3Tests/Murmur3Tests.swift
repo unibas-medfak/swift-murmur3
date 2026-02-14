@@ -45,3 +45,9 @@ import Testing
     let average = totalTime / Double(iterations)
     print("Average over \(iterations) runs: \(average * 1000)ms")
 }
+
+@Test func fileDigestHex() throws {
+    let url = Bundle.module.url(forResource: "alice29", withExtension: "txt")!
+    let hex = try Murmur3Hash.digestHex(fileAt: url)
+    #expect(hex == "ef12617f3e2a5f9a44b3598f2e09cd50")
+}

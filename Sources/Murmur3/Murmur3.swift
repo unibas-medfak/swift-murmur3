@@ -466,4 +466,24 @@ public struct Murmur3Hash {
         let h = digest()
         return String(format: "%016lx%016lx", h[0], h[1])
     }
+
+    // MARK: - File hashing
+
+    /// Hashes a file at the given URL and returns the digest as a 32-character
+    /// lowercase hex string. Reads the file in chunks to support arbitrarily
+    /// large files without loading them entirely into memory.
+    static public func digestHex(
+        fileAt url: URL,
+        seed: UInt32 = 0,
+        bufferSize: Int = 1024 * 1024
+    ) throws -> String {
+        let handle = try FileHandle(forReadingFrom: url)
+        defer { try? handle.close() }
+
+        var hasher = Murmur3Hash(seed)
+        while let chunk = try handle.read(upToCount: bufferSize), !chunk.isEmpty {
+            hasher.update(chunk)
+        }
+        return hasher.digestHex()
+    }
 }
