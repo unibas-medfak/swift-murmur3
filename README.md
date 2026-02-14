@@ -59,7 +59,7 @@ targets: [
 
 ## Requirements
 
-- Swift 6.2+
+- Swift 6.1+
 
 ## Acknowledgements
 
